@@ -109,7 +109,8 @@ export default function Home() {
           {destFile && srcFile ? (
             destHeaders.map((header, i) => (
               <p key={i}>
-                <b>{header}</b> should map to{" "}
+                <b>{header.trim() === "" ? "<Empty Header>" : header}</b> should
+                map to{" "}
                 <select
                   name={`column-reassign-index-header-${header}`}
                   required
