@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+const commaSafeRegex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
+
 export default function Home() {
   const [destFile, setDestFile] = useState<File>();
   const [destHeaders, setDestHeaders] = useState<string[]>([]);
@@ -15,7 +17,7 @@ export default function Home() {
       const reader = new FileReader();
       reader.onload = (e) => {
         const [headersRow, ...dataRows] = String(e.target.result).split("\n");
-        const headers = headersRow.split(",");
+        const headers = headersRow.split(commaSafeRegex);
         setDestHeaders(headers);
         setDestAssignments(headers.map(() => -1));
         setDestFillValues(headers.map(() => ""));
@@ -29,8 +31,8 @@ export default function Home() {
       const reader = new FileReader();
       reader.onload = (e) => {
         const [headersRow, ...dataRows] = String(e.target.result).split("\n");
-        const headers = headersRow.split(",");
-        const data = dataRows.map((dataRow) => dataRow.split(","));
+        const headers = headersRow.split(commaSafeRegex);
+        const data = dataRows.map((dataRow) => dataRow.split(commaSafeRegex));
         setSrcHeaders(headers);
         setSrcData(data);
       };
