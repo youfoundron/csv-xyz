@@ -32,7 +32,9 @@ export default function Home() {
       reader.onload = (e) => {
         const [headersRow, ...dataRows] = String(e.target.result).split("\n");
         const headers = headersRow.split(commaSafeRegex);
-        const data = dataRows.map((dataRow) => dataRow.split(commaSafeRegex));
+        const data = dataRows
+          .filter(Boolean)
+          .map((dataRow) => dataRow.split(commaSafeRegex));
         setSrcHeaders(headers);
         setSrcData(data);
       };
